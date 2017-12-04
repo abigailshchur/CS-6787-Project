@@ -1,0 +1,80 @@
+\documentclass{article}
+\usepackage{times}
+\usepackage{graphicx}
+\usepackage{subfigure} 
+\usepackage{natbib}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{hyperref}
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+\usepackage[accepted]{icml2017}
+\icmltitlerunning{Submission and Formatting Instructions for ICML 2017}
+
+\begin{document} 
+
+\twocolumn[
+\icmltitle{CS 6787 Project \\ 
+           Variance Reduction for Low Precision Arithmetic}
+
+\icmlsetsymbol{equal}{*}
+
+\begin{icmlauthorlist}
+\icmlauthor{Abigail Shchur (aks236)}{equal,cornell}
+\icmlauthor{Sergio Palomo (sdp85)}{equal,cornell}
+\icmlauthor{Serena Li (sl2327)}{equal,cornell}
+\end{icmlauthorlist}
+
+\icmlaffiliation{cornell}{Cornell University, USA}
+\icmlcorrespondingauthor{Abigail Shchur}{aks236@cornell.edu}
+\icmlcorrespondingauthor{Sergio Palomo}{sdp85@cornell.edu}
+\icmlcorrespondingauthor{Serena Li}{sl2327@cornell.edu}
+
+
+\icmlkeywords{boring formatting information, machine learning, ICML}
+
+\vskip 0.3in
+]
+
+%\printAffiliationsAndNotice{\icmlEqualContribution} % otherwise use the standard text.
+
+\begin{abstract}
+Training using Stochastic Gradient Descent (SGD) is often heavily constrained due to limited computational resources. This bottleneck can be mitigated by utilizing low precision arithmetic which is known to decrease energy consumption and improve throughput. However, naively using low precision representations can slow down convergence and result in a low accuracy model. This is because the loss of information from the quantization steps that are necessary to maintain a low precision model can be seen as a form variance. We evaluate the effect of combining low precision arithmetic with SVRG on Linear Regression and Matrix Completion. Specifically, we first look at an implementation of Low Precision SVRG (LP-SVRG) that uses low precision weights and is optimized for speed for a given loss function. We also evaluate a version of High Accuracy Low Precision SVRG (HALP) that uses full precision weights but low precision weight updates. We observe that the low precision computations are indeed faster than the computations that are used in a full precision model. In addition, the LP models converge at similar rates to the full precision models (not yet shown .... but hopefully). 
+\end{abstract} 
+
+\section{Introduction}
+
+Introduction 
+
+
+\section{Linear Regression} 
+
+\subsection*{LP- Linear Regression}
+
+\subsection*{LP - Linear Regression Fast}
+
+\subsection*{HALP - Linear Regression}
+
+\subsection*{HALP - Linear Regression  Fast}
+
+\section{Matrix Completion}
+SERGIO WRITE STUFF HERE
+\subsection*{Matrix Completion FP SVRG}
+SERGIO WRITE STUFF HERE
+\subsection*{Matrix Completion LP SVRG}
+SERGIO WRITE STUFF HERE
+\subsection*{Matrix Completion HALP}
+SERGIO WRITE STUFF HERE
+\section{Experiments}
+
+\subsection*{Linear Regression}
+
+\subsection*{Matrix Completion}
+ SERGIO WRITE STUFF HERE
+
+
+
+
+\bibliography{example_paper}
+\bibliographystyle{icml2017}
+
+\end{document} 

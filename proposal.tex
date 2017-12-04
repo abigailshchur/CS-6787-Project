@@ -1,0 +1,40 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin = 70pt]{geometry}
+\usepackage{biblatex}
+\addbibresource{references.bib}
+
+\title{CS 6787 Project Proposal}
+\author{Abigail Shchur (aks236), Sergio Palomo (sdp85), Serena Li (sl2327)}
+\date{November 13, 2017}
+
+\begin{document}
+
+\maketitle
+
+\section{Motivation and Problem Statement}
+
+Our primary goal is to implement a version of low precision\cite{Gupta:2015:DLL:3045118.3045303} Stochastic Gradient Descent (SGD) that uses Stochastic Variance Reduced Gradient (SVRG) \cite{Johnson:2013:ASG:2999611.2999647} to produce better accuracy results comparing to regular low precision SGD. We will implement two variants of this algorithm. The first one (LP-SVRG) will be a simple implementation of SVRG that just uses low precision weights defined by a scale factor and assignments for some small number of bits. It should be noted that the accuracy of this method is limited due to the limited expressivity of low precision numbers. We will then implement another variant (HALP)\cite{halp} that produces high accuracy results by updating the scale parameter after each epoch. The planed experiments include for both linear regression and matrix completion. Ideally, the LP-SVRG algorithm should complete computations for each epoch at a faster rate than full precision SVRG compromising on the training error. Same is expected for HALP algorithm, but it should also result in arbitrarily accurate final weights. 
+
+\section{Procedure and Preliminary Work}
+Implementing LP-SVRG should be fairly straightforward. We can use 8, 16, or 32 bit integer Numpy Arrays and store a constant scale factor in Python. We have a working version of full precision SVRG in Python for linear regression. Converting this to LP-SVRG should be fairly trivial. The one detail that we will have to look into is finding an inexpensive pseudo-random number generator for Python to deal with quantization. To create a version of LP-SVRG for Matrix Completion, we will look at the paper ``A Universal Variance Reduction-Based Catalyst for Nonconvex Low-Rank Matrix Recovery"\cite{pmlr-v70-wang17n} for some assistance since they implement a variant of SVRG for Matrix Completion. At the time of submitting this proposal, we will have a working version of LP-SVRG for linear regression and the corresponding experiments completed. 
+\\
+
+\noindent Implementing HALP should be straightforward as well once LP-SVRG is implemented. There is a method by which both methods can be optimized for specifically linear models\cite{halp}. We will implement this optimization for both LP-SVRG and HALP for the linear regression case. Another component of our project will invovle looking into the possibility of doing similar optimizations for Matrix Completion. \\
+
+\noindent From a testing perspective, we will predominately use artificial data. Since we are doing low precision calculations, we want wall clock time to run SGD to decrease. As a result, we will keep track of the wall clock time per epoch for the various variants that were implemented (including full precision SVRG). Another similar metric that we will look at is training error after each epoch. We may also granularize this a bit and look at training error after each stochastic update, and potentially test error.
+
+\newpage
+\section{Experiments}
+We will do the following experiments for both the linear regression and matrix completion formulations of the algorithms. For all of the experiments, we will use variously sized artificial datasets and varying length weight vectors. 
+\begin{itemize}
+    \item One hypothesis is that LP-SVRG should complete gradient updates faster than full precision SVRG. We care about speed here so we will look at the wallclock time of the completion of each epoch. We will run both full precision SVRG and LP-SVRG and record the wallclock times. We expect to get results that agree with our hypothesis though we do not know the degree of the expected speedup. 
+    \item Another hypothesis is that HALP should complete gradient updates faster than full precision SVRG. Aside from using HALP instead of LP-SVRG, this set of experiments will be equivalent to the preceding ones.
+    \item Next, we believe that the training error for LP-SVRG should decrease though it will converge to a noise ball unlike full precision SVRG. The metric that we will look at here is training error after each epoch (we may also look at training error after each stochastic gradient update).  We expect to see results that verify our hypothesis. A plot that is time vs error would be provided. 
+    \item Lastly, we believe that training error for HALP should converge to the same point as full precision SVRG. The testing process will be equivalent to the preceding experiment. 
+\end{itemize}
+
+\newpage
+\printbibliography
+
+\end{document}
